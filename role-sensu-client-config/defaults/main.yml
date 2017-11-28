@@ -1,0 +1,5 @@
+---
+# Default main APT packages source for Ubuntu servers
+sensu_repo_url: "http://sensu.global.ssl.fastly.net"
+
+sensu_yumrepo_url: "http://repositories.sensuapp.org"

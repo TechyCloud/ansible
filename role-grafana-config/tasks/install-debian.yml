@@ -1,0 +1,34 @@
+---
+- name: "Adding apt singning key"
+  apt_key:
+    url: "https://packagecloud.io/gpg.key"
+    state: "present"
+
+- name: "Configure grafana APT package sources"
+  template:
+    src: "grafana.list.j2"
+    dest: "/etc/apt/sources.list.d/grafana.list"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  tags: install
+  register: sources
+
+- name: "Update apt cache"
+  apt:
+    update_cache: yes
+  when: sources.changed
+
+- name: "Install basic packages"
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - grafana
+    - apt-transport-https
+
+  notify:
+  - Restart grafana
+

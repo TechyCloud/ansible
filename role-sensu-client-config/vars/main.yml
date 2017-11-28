@@ -1,0 +1,10 @@
+---
+sensu_client_config:
+ - clienthost: "Testinstance"
+
+sensu_server_details:
+ - serverhost: "XX.XX.XX.XX"
+   servervhost: "/sensu"
+   username: "XXXXX"
+   portnumber: "5672"
+   password: "XXXXX"

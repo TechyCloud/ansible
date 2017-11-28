@@ -1,0 +1,3 @@
+---
+# Default main APT packages source for Ubuntu servers
+grafana_repo_url: "https://packagecloud.io/grafana/stable/debian/"

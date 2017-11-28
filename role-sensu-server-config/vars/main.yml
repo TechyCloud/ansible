@@ -1,0 +1,16 @@
+---
+sensu_mailer_config:
+ - mailfrom: "info@example.com"
+   mailto: "info@example.com"
+
+sensu_rabbitmq_config:
+ - sensuport: "5672"
+   sensuvhost: "/sensu"
+   sensuuser: "XXXX"
+   password: "XXXX"
+
+sensu_uchiwa_config:
+ - adminuser: "admin"
+   adminpassword: "XXXX"
+   readonlyuser: "guest"
+   readonlyusrpass: "XXXX"

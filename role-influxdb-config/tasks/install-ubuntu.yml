@@ -1,0 +1,44 @@
+---
+- name: "Adding apt singning key"
+  apt_key:
+    url: "https://repos.influxdata.com/influxdb.key"
+    state: "present"
+
+- name: "Configure influxdb APT package sources"
+  template:
+    src: "influxdb.list.j2"
+    dest: "/etc/apt/sources.list.d/influxdb.list"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  tags: install
+  register: sources
+
+- name: "Update apt cache"
+  apt:
+    update_cache: yes
+  when: sources.changed
+
+- name: "Install basic packages"
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - influxdb
+    - python-pip
+  notify: 
+  - Restart influxdb
+
+- name: "Starting the influxdb"
+  service:
+    name: influxdb
+    state: started
+    enabled: yes
+
+- name: "Install influxdb with pip"
+  pip:
+    name: influxdb
+  notify: 
+  - Restart influxdb

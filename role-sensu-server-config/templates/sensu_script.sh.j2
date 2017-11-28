@@ -1,0 +1,41 @@
+#!/bin/bash
+
+##Create a dedicated RabbitMQ vhost for Sensu
+
+sudo rabbitmqctl add_vhost {{ item.sensuvhost }}
+
+##Create a RabbitMQ user for Sensu
+
+sudo rabbitmqctl add_user {{ item.sensuuser }} {{ item.password }}
+
+sudo rabbitmqctl set_permissions -p {{ item.sensuvhost }} {{ item.sensuuser }} ".*" ".*" ".*"
+
+##Install sensu plugins
+
+cd /opt/sensu/embedded/bin/
+
+sensu-install -p cpu-checks
+
+sensu-install -p disk-checks
+
+sensu-install -p memory-checks
+
+sensu-install -p nginx
+
+sensu-install -p process-checks
+
+sensu-install -p load-checks
+
+sensu-install -p vmstats
+
+sensu-install -p mailer
+
+##Enable sensu services to start automatically
+
+sudo update-rc.d sensu-server defaults
+
+sudo update-rc.d sensu-client defaults
+
+sudo update-rc.d sensu-api defaults
+
+sudo update-rc.d uchiwa defaults

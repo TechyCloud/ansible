@@ -1,0 +1,9 @@
+---
+- name: "Include {{ ansible_os_family }} tasks"
+  include: "install-{{ ansible_os_family | lower }}.yml"
+
+- name: "Include Config tasks"
+  include: "config.yml"
+
+- name: "Include Sensu-script tasks"
+  include: "sensu_script.yml"

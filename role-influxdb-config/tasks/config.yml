@@ -1,0 +1,11 @@
+---
+- name: "Create database"
+  influxdb_database:
+   hostname: "{{ inventory_hostname }}"
+   username: "{{ item.dbusername }}"
+   password: "{{ item.dbusrpassword }}"
+   database_name: "{{ item.dbname }}"
+   state: present
+  with_items: "{{influxdb_config}}"
+  notify:
+  - Restart influxdb

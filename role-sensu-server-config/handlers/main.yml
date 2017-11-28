@@ -1,0 +1,17 @@
+---
+# Common handlers available everywhere
+- name: "Restart Services"
+  service:
+    name: "{{ item }}"
+    state: "restarted"
+  with_items:
+    - sensu-server
+    - sensu-client
+    - rabbitmq-server
+    - redis-server
+    - sensu-api
+
+- name: "Restart Uchiwa"
+  service:
+    name: "uchiwa"
+    state: "restarted"

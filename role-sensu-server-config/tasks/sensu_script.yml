@@ -1,0 +1,15 @@
+---
+- name: "Adding sensu-script"
+  template:
+   src: "sensu_script.sh.j2"
+   dest: "/tmp/sensu_script.sh"
+   owner: "root"
+   group: "root"
+   mode: "0755"
+  with_items: "{{sensu_rabbitmq_config}}"
+
+- name: "Running sensu-script"
+  shell: "/tmp/sensu_script.sh"
+
+- name: "Removing sensu-script"
+  shell: "rm -rf /tmp/sensu_script.sh"

@@ -1,0 +1,16 @@
+---
+- name: "Adding sensu-script"
+  copy:
+   src: "{{ item }}"
+   dest: "/tmp/{{ item }}"
+   owner: "root"
+   group: "root"
+   mode: "0755"
+  with_items:
+   - sensu_script.sh
+
+- name: "Running sensu-script"
+  shell: "/tmp/sensu_script.sh"
+
+- name: "Removing sensu-script"
+  shell: "rm -rf /tmp/sensu_script.sh"

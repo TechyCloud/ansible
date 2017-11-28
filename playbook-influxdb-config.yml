@@ -1,0 +1,6 @@
+---
+- name: "Setting the hosts"
+  hosts: "{{ hosts }}" 
+  sudo: "yes"
+  roles:
+   - { role: role-influxdb-config, tags: role-influxdb-config }

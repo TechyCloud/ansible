@@ -1,0 +1,42 @@
+---
+- name: "Adding apt singning key"
+  apt_key:
+    url: "http://sensu.global.ssl.fastly.net/apt/pubkey.gpg"
+    state: "present"
+
+- name: "Configure Sensu APT package sources"
+  template:
+    src: "sensu.list.j2"
+    dest: "/etc/apt/sources.list.d/sensu.list"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  tags: install
+  register: sources
+
+- name: "Update apt cache"
+  apt:
+    update_cache: yes
+  when: sources.changed
+
+- name: "Install deb packages from internet"
+  apt:
+    deb: "http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb"
+
+- name: "Install Rabbitmq-server"
+  apt:
+    deb: "http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.0/rabbitmq-server_3.6.0-1_all.deb"
+
+- name: "Install basic packages"
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - sensu
+    - redis-server
+    - erlang-nox
+    - uchiwa
+    - postfix
+    - libapache2-mod-wsgi

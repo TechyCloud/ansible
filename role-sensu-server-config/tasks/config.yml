@@ -1,0 +1,42 @@
+---
+- name: "Updating client.json file"
+  copy:
+   src: "{{ item }}.json"
+   dest: "/etc/sensu/conf.d/{{ item }}.json"
+  with_items:
+   - client
+   - transport
+   - api
+   - redis
+   - check_cpu_linux
+   - check_memory_linux
+   - check_disk_usage_linux
+   - handler_mail
+
+  notify:
+  - Restart Services
+
+- name: "Updating uchiwa.json file"
+  copy:
+   src: "{{ item }}.json"
+   dest: "/etc/sensu/{{ item }}.json"
+  with_items: 
+   - uchiwa
+
+  notify:
+  - Restart Uchiwa
+
+- name: "Updating mailer.json file"
+  template:
+   src: "mailer.json.j2"
+   dest: "/etc/sensu/conf.d/mailer.json"
+  with_items: "{{sensu_mailer_config}}"
+
+- name: "Updating rabbitmq.json file"
+  template:
+   src: "rabbitmq.json.j2"
+   dest: "/etc/sensu/conf.d/rabbitmq.json"
+  with_items: "{{sensu_rabbitmq_config}}"
+  
+- name: "Change the /tmp directory permission"
+  shell: chmod o+t /tmp

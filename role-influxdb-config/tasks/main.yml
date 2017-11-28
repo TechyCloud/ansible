@@ -1,0 +1,6 @@
+---
+- name: "Include {{ ansible_os_family }} tasks"
+  include: "install-{{ ansible_os_family | lower }}.yml"
+
+- name: "Include configuration tasks"
+  include: "config.yml"

@@ -1,0 +1,3 @@
+---
+# Default main APT packages source for Ubuntu servers
+influxdb_repo_url: "http://repos.influxdata.com/debian"

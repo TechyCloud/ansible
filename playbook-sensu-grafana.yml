@@ -1,0 +1,8 @@
+---
+- name: "Setting the hosts"
+  hosts: "{{ hosts }}"
+  sudo: "yes"
+  roles:
+   - { role: role-sensu-server-config, tags: role-sensu-server-config }
+   - { role: role-grafana-config, tags: role-grafana-config }
+   - { role: role-influxdb-config, tags: role-influxdb-config }

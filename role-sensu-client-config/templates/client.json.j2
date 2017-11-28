@@ -1,0 +1,15 @@
+{
+"client": {
+"name": "{{ item.clienthost }}",
+"address": "{{ inventory_hostname }}",
+"keepalive":
+{
+"handler": "mailer",
+        "thresholds": {
+        "warning": 250,
+        "critical": 300
+}
+},
+"subscriptions":["Basic"]
+}
+}

@@ -1,0 +1,6 @@
+---
+- name: "Setting the hosts"
+  hosts: "{{ hosts }}"
+  sudo: "yes"
+  roles:
+   - { role: role-sensu-server-config, tags: role-sensu-server-config }

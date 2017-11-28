@@ -1,0 +1,17 @@
+---
+- name: "Configure Sensu yum package sources"
+  template:
+    src: "sensu.repo.j2"
+    dest: "/etc/yum.repos.d/sensu.repo"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  tags: install
+  register: sources
+
+- name: "Install sensu-client packages"
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - sensu
